@@ -1,0 +1,29 @@
+---
+- name: install telegraf
+  become: yes
+  apt:
+    name: telegraf
+    state: latest
+    update_cache: yes
+
+- name: start telegraf service
+  become: yes
+  systemd: 
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: backup original config file
+  become: yes
+  copy:
+    src: /etc/telegraf/telegraf.conf
+    dest: /etc/telegraf/telegraf.conf.orig
+    remote_src: yes
+
+- name: copy config file
+  become: yes
+  template:
+    src: telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+  notify:
+    - restart telegraf service

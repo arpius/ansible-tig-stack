@@ -1,0 +1,9 @@
+---
+- name: setup the TIG stack (telegraf-influxdb-grafana)
+  hosts: monitoring
+  remote_user: vagrant
+  roles:
+    - common
+    - influxdb
+    - telegraf
+    - grafana

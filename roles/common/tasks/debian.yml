@@ -1,0 +1,18 @@
+---
+- name: upgrade system
+  become: yes
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: install required packages
+  become: yes
+  apt:
+    name: [
+      'build-essential', 
+      'policykit-1', 
+      'python3-influxdb', 
+      'software-properties-common'
+      ]
+    state: latest
+    update_cache: yes

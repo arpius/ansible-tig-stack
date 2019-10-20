@@ -1,0 +1,46 @@
+---
+- name: add influxdb repository key
+  become: yes
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: add influxdb repository
+  become: yes
+  apt_repository:
+    repo: deb https://repos.influxdata.com/debian buster stable
+    state: present
+    filename: influxdb
+
+- name: install influxdb
+  become: yes
+  apt:
+    name: influxdb
+    state: latest
+    update_cache: yes
+
+- name: start influxdb service
+  systemd: 
+    name: influxdb
+    state: started
+    enabled: yes
+  become: yes
+  async: 45
+  poll: 5
+
+- name: create database
+  become: yes
+  influxdb_database:
+    hostname: 127.0.0.1
+    database_name: telegraf
+    state: present
+
+- name: create user with all privileges
+  become: yes
+  influxdb_user:
+    user_name: telegraf
+    user_password: telegraf
+    grants:
+      - database: 'telegraf'
+        privilege: 'ALL'
+    state: present

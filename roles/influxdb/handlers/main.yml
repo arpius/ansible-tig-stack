@@ -1,0 +1,13 @@
+---
+- name: unmask influxdb service
+  become: yes
+  systemd:
+    name: influxdb
+    enabled: yes
+    masked: no
+
+- name: start influxdb service
+  become: yes
+  systemd: 
+    name: influxdb
+    state: started

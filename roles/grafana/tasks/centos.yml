@@ -1,0 +1,28 @@
+---
+- name: add grafana repository
+  become: yes
+  yum_repository:
+    state: present
+    description: grafana
+    name: grafana
+    baseurl: https://packages.grafana.com/oss/rpm
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://packages.grafana.com/gpg.key
+    sslverify: yes
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+
+- name: install grafana
+  become: yes
+  yum:
+    name: grafana
+    state: latest
+    update_cache: yes
+
+- name: start grafana service
+  become: yes
+  systemd: 
+    name: grafana-server
+    state: started
+    enabled: yes
+    daemon_reload: yes

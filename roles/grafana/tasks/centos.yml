@@ -26,3 +26,11 @@
     state: started
     enabled: yes
     daemon_reload: yes
+
+- name: allow grafana port
+  become: yes
+  command: firewall-cmd --zone=public --add-port=3000/tcp --permanent
+
+- name: reload firewall
+  become: yes
+  command: firewall-cmd --reload

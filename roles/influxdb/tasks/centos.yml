@@ -29,16 +29,16 @@
 - name: create database
   become: yes
   influxdb_database:
-    hostname: 127.0.0.1
-    database_name: telegraf
+    hostname: '{{ influxdb_hostname }}'
+    database_name: '{{ influxdb_database }}'
     state: present
 
 - name: create user with all privileges
   become: yes
   influxdb_user:
-    user_name: telegraf
-    user_password: telegraf
+    user_name: '{{ influxdb_username }}'
+    user_password: '{{ influxdb_password }}'
     grants:
-      - database: 'telegraf'
+      - database: '{{ influxdb_database }}'
         privilege: 'ALL'
     state: present

@@ -1,0 +1,5 @@
+---
+influxdb_hostname: 127.0.0.1
+influxdb_database: telegraf
+influxdb_username: telegraf
+influxdb_password: MyT3legraFp4ss
